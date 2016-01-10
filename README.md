@@ -27,6 +27,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Repository README
 
+# WHAT IS THIS:
+
+Demonstration of eChronos ported to TI Connected Launchpad:
+    - Cortex M4F core, chip is TM4C1294
+    - lwIP ported to eChronos scheduler (Kochab)
+    - Kochab modified to include message queues
+    - Some other changes (this is a sandbox!)
+
+Currently uses some experimental features that have not made it into origin/development yet.
+
 ## Overview
 
 The eChronos RTOS is a real-time operating system (RTOS) originally developed by NICTA and Breakaway Consulting Pty. Ltd.
