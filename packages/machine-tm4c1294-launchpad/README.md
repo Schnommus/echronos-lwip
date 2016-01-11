@@ -5,7 +5,7 @@
 This contains a modified version of the armv7 package used by the majority of ARM projects using this RTOS. The major changes are:
 
     - A new version of Kochab that includes message queues, which have been torn out of the rigel variant and modified slightly.
-    - More lenient parsing, and better error messages when doing bitband replacement so that the vector table script doesn't disagree with TI's libraries. 
+    - More lenient parsing, and better error messages when doing bitband replacement so that the vector table script doesn't disagree with TI's libraries.
 
 ## `build.py`
 
@@ -17,7 +17,7 @@ A custom build script that makes it so prj happily munches through TI's framewor
 
 ## `example`
 
-Directory I use for putting some basic backward-compatibility tests across versions. It's not really worth looking at. 
+Directory I use for putting some basic backward-compatibility tests across versions. It's not really worth looking at.
 
 ## `src`
 
