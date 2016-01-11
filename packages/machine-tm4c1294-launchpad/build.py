@@ -37,19 +37,6 @@ def run(system, configuration=None):
 def system_build(system):
     print("== In TI build function! ==")
 
-    ti_lib_dir = os.getcwd() + "/packages/machine-tm4c1294-launchpad/ti_libs/"
-    
-    system.add_include_path(ti_lib_dir)
-    system.add_include_path(ti_lib_dir + "inc")
-    system.add_include_path(ti_lib_dir + "stdlib_hook")
-    system.add_include_path(ti_lib_dir + "examples/boards/ek-tm4c1294xl")
-    system.add_include_path(ti_lib_dir + "third_party/lwip-1.4.1/src/include")
-    system.add_include_path(ti_lib_dir + "third_party/lwip-1.4.1/apps")
-    system.add_include_path(ti_lib_dir + "third_party/lwip-1.4.1/ports/tiva-tm4c129/include")
-    system.add_include_path(ti_lib_dir + "third_party/lwip-1.4.1/src/include/ipv4")
-    system.add_include_path(ti_lib_dir + "third_party")
-    system.add_include_path(ti_lib_dir + "../projects/util")
-
     cpu_fpu = [ '-mfpu=fpv4-sp-d16', '-mfloat-abi=softfp']
 
     inc_path_args = ['-I%s' % i for i in system.include_paths]
@@ -87,12 +74,6 @@ def system_build(system):
     for s, o in zip(system.asm_files, asm_obj_files):
         os.makedirs(os.path.dirname(o), exist_ok=True)
         execute(['arm-none-eabi-as', '-o', o, s] + a_flags + inc_path_args)
-
-    #HACKY SOLUTION
-    #(Before modules written)
-    #c_obj_files.append( ti_lib_dir + "driverlib/gcc/libdriver.a" )
-    #c_obj_files.append( ti_lib_dir + "examples/boards/ek-tm4c1294xl/hello/gcc/uartstdio.o" )
-    #c_obj_files.append( ti_lib_dir + "examples/boards/ek-tm4c1294xl/hello/gcc/pinout.o" )
 
     # Perform final link
     obj_files = asm_obj_files + c_obj_files

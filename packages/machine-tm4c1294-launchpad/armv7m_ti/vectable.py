@@ -98,12 +98,17 @@ class EntryModule(Module):
         p = ply.cpp.Preprocessor(include_paths=system.include_paths,
                                  macro_callback=cb)
 
+        print("==BEGIN BITBAND PARSING==\n => Note that errors here due to unsupported gcc extensions in the python parser are common and can be ignored in many cases")
         for c_file in system.c_files:
+            print("Doing bitband parse on: " + c_file)
             with open(c_file) as f:
                 try:
                     p.parse(f.read(), c_file)
                 except ply.cpp.CppError as e:
-                    pass#raise SystemBuildError(str(e))
+                    print("Got error: " + str(e) + ", continuing...")
+                except:
+                    print("Got an unhandled parse error")
+        print("==END BITBAND PARSING==")
 
         super().post_prepare(system, config)
 

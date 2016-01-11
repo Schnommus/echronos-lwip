@@ -27,6 +27,19 @@
   -->
 
 <system>
+    <include_paths>
+        <include_path>packages/machine-tm4c1294-launchpad/projects/util</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/ti_libs</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/ti_libs/inc</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/ti_libs/stdlib_hook</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/ti_libs/examples/boards/ek-tm4c1294xl</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/ti_libs/third_party/lwip-1.4.1/src/include</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/ti_libs/third_party/lwip-1.4.1/apps</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/ti_libs/third_party/lwip-1.4.1/ports/tiva-tm4c129/include</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/ti_libs/third_party/lwip-1.4.1/src/include/ipv4</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/ti_libs/third_party</include_path>
+    </include_paths>
+
     <modules>
         <module name="machine-tm4c1294-launchpad.build" />
 
