@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+     eChronos Real-Time Operating System
+     Copyright (C) 2015  National ICT Australia Limited (NICTA), ABN 62 102 206 173.
+
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU Affero General Public License as published by
+     the Free Software Foundation, version 3, provided that these additional
+     terms apply under section 7:
+
+       No right, title or interest in or to any trade mark, service mark, logo
+       or trade name of of National ICT Australia Limited, ABN 62 102 206 173
+       ("NICTA") or its licensors is granted. Modified versions of the Program
+       must be plainly marked as such, and must not be distributed using
+       "eChronos" as a trade mark or product name, or misrepresented as being
+       the original Program.
+
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU Affero General Public License for more details.
+
+     You should have received a copy of the GNU Affero General Public License
+     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+     @TAG(NICTA_AGPL)
+  -->
+
+<system>
+  <modules>
+    <module name="machine-tm4c1294-launchpad.build" />
+
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.adc"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.aes"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.can"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.comp"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.cpu"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.crc"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.des"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.eeprom"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.emac"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.epi"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.flash"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.fpu"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.gpio"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.i2c"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.interrupt"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.lcd"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.mpu"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.onewire"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.pwm"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.qei"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.shamd5"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.ssi"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.sw_crc"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.sysctl"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.sysexc"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.systick"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.timer"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.uart"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.udma"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.usb"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.driverlib.watchdog"/>
+
+    <module name="machine-tm4c1294-launchpad.ti_libs.utils.uartstdio"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.utils.ustdlib"/>
+    <!--<module name="machine-tm4c1294-launchpad.ti_libs.utils.lwiplib"/>
+    <module name="machine-tm4c1294-launchpad.ti_libs.utils.locator"/>-->
+    <module name="machine-tm4c1294-launchpad.ti_libs.examples.boards.ek-tm4c1294xl.drivers.pinout"/>
+
+    <module name="machine-tm4c1294-launchpad.armv7m_ti.ctxt-switch-preempt" />
+    <module name="machine-tm4c1294-launchpad.armv7m_ti.exception-preempt">
+      <trampolines>
+        <trampoline>
+          <name>systick</name>
+          <handler>tick_irq</handler>
+        </trampoline>
+      </trampolines>
+    </module>
+    <module name="machine-tm4c1294-launchpad.armv7m_ti.vectable">
+      <flash_load_addr>0x0000000</flash_load_addr>
+      <preemption>true</preemption>
+      <systick>exception_preempt_trampoline_systick</systick>
+      <nmi>nmi</nmi>
+      <hardfault>hardfault</hardfault>
+      <memmanage>memmanage</memmanage>
+      <usagefault>usagefault</usagefault>
+    </module>
+
+    <module name="machine-tm4c1294-launchpad.armv7m_ti.rtos-kochab-messagequeue">
+      <api_asserts>true</api_asserts>
+      <internal_asserts>true</internal_asserts>
+      <fatal_error>fatal</fatal_error>
+      <prefix>rtos</prefix>
+      <taskid_size>8</taskid_size>
+      <signalset_size>8</signalset_size>
+      <tasks>
+        <task>
+          <name>a</name>
+          <function>fn_a</function>
+          <priority>30</priority>
+          <stack_size>8192</stack_size>
+        </task>
+
+        <task>
+          <name>b</name>
+          <function>fn_b</function>
+          <priority>10</priority>
+          <stack_size>8192</stack_size>
+        </task>
+
+      </tasks>
+
+      <signal_labels>
+
+        <signal_label>
+          <name>timer</name>
+        </signal_label>
+
+        <signal_label>
+          <name>test</name>
+        </signal_label>
+
+      </signal_labels>
+
+      <interrupt_events>
+        <interrupt_event>
+          <name>tick</name>
+          <task>a</task>
+          <sig_set>timer</sig_set>
+        </interrupt_event>
+      </interrupt_events>
+
+      <mutexes>
+        <mutex>
+          <name>m0</name>
+        </mutex>
+      </mutexes>
+      <mutex>
+        <stats>false</stats>
+      </mutex>
+      <!--
+      <message_queues>
+          <message_queue>
+              <name>example_queue</name>
+              <message_type>void*</message_type>
+              <queue_length>10</queue_length>
+          </message_queue>
+      </message_queues>
+    -->
+    <message_queues>
+        <message_queue>
+            <name>test_queue</name>
+            <message_size>4</message_size>
+            <queue_length>10</queue_length>
+        </message_queue>
+    </message_queues>
+    </module>
+
+    <module name="machine-tm4c1294-launchpad.src.kochab-messagequeue"/>
+
+  </modules>
+</system>

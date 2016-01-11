@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema>
+<entry default="" name="reentrant" optional="true" type="string" />
+<entry default="8" name="signalset_size" type="int" />
+<entry auto_index_field="idx" default="[]" name="signal_labels" type="list">
+    <entry name="signal_label" type="dict">
+        <entry name="name" type="ident" />
+    </entry>
+</entry>
+<entry auto_index_field="idx" default="[]" name="timers" type="list">
+    <entry name="timer" type="dict">
+        <entry name="name" type="ident" />
+        <entry default="false" name="enabled" type="bool" />
+        <entry default="0" name="reload" type="int" />
+        <entry default="0" name="error" type="int" />
+        <entry group="tasks" name="task" optional="true" type="object" />
+        <entry name="sig_set" optional="true" type="ident" />
+    </entry>
+</entry>
+<entry default="8" name="interrupteventid_size" type="int" />
+<entry auto_index_field="idx" default="[]" name="interrupt_events" type="list">
+    <entry name="interrupt_event" type="dict">
+        <entry name="name" type="ident" />
+    <entry group="tasks" name="task" type="object" />
+        <entry name="sig_set" type="ident" />
+    </entry>
+</entry>
+<entry auto_index_field="idx" default="[]" name="mutexes" type="list">
+    <entry name="mutex" type="dict">
+        <entry name="name" type="ident" />
+    </entry>
+</entry>
+<entry name="mutex" optional="true" type="dict">
+    <entry default="false" name="stats" optional="true" type="bool" />
+</entry>
+<entry default="8" name="semaphore_value_size" type="int" />
+<entry default="false" name="semaphore_enable_max" type="bool" />
+<entry auto_index_field="idx" default="[]" name="semaphores" type="list">
+    <entry name="semaphore" type="dict">
+        <entry name="name" type="ident" />
+    </entry>
+</entry>
+<entry auto_index_field="idx" default="[]" name="message_queues" type="list">
+    <entry name="message_queue" type="dict">
+        <entry name="name" type="ident" />
+        <entry name="message_size" optional="true" type="int" />
+        <entry name="message_type" optional="true" type="string" />
+        <constraint name="constraint0" type="one_of">
+            <entry name="message_size">message_size</entry>
+            <entry name="message_type">message_type</entry>
+        </constraint>
+        <entry name="queue_length" type="int" />
+    </entry>
+</entry>
+<entry default="false" name="api_asserts" type="bool" />
+<entry default="false" name="internal_asserts" type="bool" />
+<entry name="fatal_error" optional="true" type="c_ident" />
+<entry default="8" name="taskid_size" type="int" />
+<entry auto_index_field="idx" name="tasks" type="list">
+    <entry name="task" type="dict">
+        <entry name="function" type="c_ident" />
+        <entry name="name" type="ident" />
+        <entry name="stack_size" type="int" />
+    <entry name="priority" type="int" />
+    </entry>
+</entry>
+<entry name="prefix" optional="true" type="ident" />
+</schema>

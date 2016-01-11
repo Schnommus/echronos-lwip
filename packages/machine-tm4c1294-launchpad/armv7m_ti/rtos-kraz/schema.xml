@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema>
+<entry default="" name="reentrant" optional="true" type="string" />
+<entry default="8" name="signalset_size" type="int" />
+<entry auto_index_field="idx" default="[]" name="signal_labels" type="list">
+    <entry name="signal_label" type="dict">
+        <entry name="name" type="ident" />
+    </entry>
+</entry>
+<entry auto_index_field="idx" default="[]" name="mutexes" type="list">
+    <entry name="mutex" type="dict">
+        <entry name="name" type="ident" />
+    </entry>
+</entry>
+<entry default="false" name="api_asserts" type="bool" />
+<entry default="false" name="internal_asserts" type="bool" />
+<entry name="fatal_error" optional="true" type="c_ident" />
+<entry default="8" name="taskid_size" type="int" />
+<entry auto_index_field="idx" name="tasks" type="list">
+    <entry name="task" type="dict">
+        <entry name="function" type="c_ident" />
+        <entry name="name" type="ident" />
+        <entry name="stack_size" type="int" />
+    </entry>
+</entry>
+<entry name="prefix" optional="true" type="ident" />
+</schema>
