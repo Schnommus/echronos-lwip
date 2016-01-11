@@ -37,6 +37,8 @@ Demonstration of eChronos ported to TI Connected Launchpad:
 
 Currently uses some experimental features that have not made it into origin/development yet.
 
+Readme on project specifics is found in packages/machine-tm4c1294-launchpad
+
 ## Overview
 
 The eChronos RTOS is a real-time operating system (RTOS) originally developed by NICTA and Breakaway Consulting Pty. Ltd.
