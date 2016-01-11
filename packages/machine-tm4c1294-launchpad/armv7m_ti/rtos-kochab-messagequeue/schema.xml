@@ -2,6 +2,8 @@
 <schema>
 <entry default="" name="reentrant" optional="true" type="string" />
 <entry default="8" name="signalset_size" type="int" />
+<entry default="224" name="svcall_priority" type="int" />
+<entry default="240" name="pendsv_priority" type="int" />
 <entry auto_index_field="idx" default="[]" name="signal_labels" type="list">
     <entry name="signal_label" type="dict">
         <entry name="name" type="ident" />

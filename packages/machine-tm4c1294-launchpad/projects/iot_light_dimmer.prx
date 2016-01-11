@@ -78,6 +78,8 @@
             <prefix>rtos</prefix>
             <taskid_size>8</taskid_size>
             <signalset_size>8</signalset_size>
+            <svcall_priority>192</svcall_priority>
+            <pendsv_priority>224</pendsv_priority>
             <tasks>
 
                 <task>
