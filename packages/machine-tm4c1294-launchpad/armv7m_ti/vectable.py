@@ -35,7 +35,8 @@ logger = logging.getLogger()
 
 class EntryModule(Module):
     # SVCall and PendSV are specified as optional in the schema, but are implemented in the asm to default to 'reset'.
-    # They are not available for config (attempts will raise an assembler error) if preemption support is enabled.
+    # They are not available for config (attempts will raise an assembler
+    # error) if preemption support is enabled.
     xml_schema = """
 <schema>
     <entry name="flash_load_addr" type="int" default="0" />
@@ -68,17 +69,21 @@ class EntryModule(Module):
     files = [
         {'input': 'bitband.h'},
         {'input': 'vectable.s', 'render': True, 'type': 'asm'},
-        {'input': 'default.ld', 'render': True, 'type': 'linker_script', 'stage': 'post_prepare'},
+        {'input': 'default.ld',
+         'render': True,
+         'type': 'linker_script',
+         'stage': 'post_prepare'},
     ]
 
     def configure(self, xml_config):
         config = {}
         config['external_irqs'] = []
-        config['bit_aliases'] = []  # A list of variables that should have bitband aliases created.
+        # A list of variables that should have bitband aliases created.
+        config['bit_aliases'] = []
 
         config.update(super().configure(xml_config))
         # Fill in external IRQ vector list
-        xirqs = [{'handler':'reset'}] * 240
+        xirqs = [{'handler': 'reset'}] * 240
         for xirq in config['external_irqs']:
             xirqs[xirq['number']] = xirq
         config['external_irqs'] = xirqs
