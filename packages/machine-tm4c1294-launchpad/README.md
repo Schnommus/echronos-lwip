@@ -15,14 +15,6 @@ A custom build script that makes it so prj happily munches through TI's framewor
     - Sets the architecture properties properly
     - Dumps all additional include_paths used in .prx declarations to a .ycm file in the repo root (Why? => this means that ycm [most common autocompletion engine for vim] can find all your symbols properly)
 
-## `example`
-
-Directory I use for putting some basic backward-compatibility tests across versions. It's not really worth looking at.
-
-## `src`
-
-Directory couples with the `example` directory. Don't worry about it, it's only for testing.
-
 ## `projects`
 
 This contains actively maintained projects on this platform; currently:
