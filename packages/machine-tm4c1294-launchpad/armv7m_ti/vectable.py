@@ -103,7 +103,10 @@ class EntryModule(Module):
         p = ply.cpp.Preprocessor(include_paths=system.include_paths,
                                  macro_callback=cb)
 
-        print("==BEGIN BITBAND PARSING==\n => Note that errors here due to unsupported gcc extensions in the python parser are common and can be ignored in many cases")
+        print("==BEGIN BITBAND PARSING==")
+        print(" => Note that errors here due to unsupported gcc extensions in the python parser")
+        print(" are common and can be ignored in many cases")
+
         for c_file in system.c_files:
             print("Doing bitband parse on: " + c_file)
             with open(c_file) as f:
