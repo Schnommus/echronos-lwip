@@ -284,8 +284,8 @@ main(void)
     ConfigureUART();
 
     // Configure the relay control pins as outputs
-    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTK_BASE, GPIO_PIN_6);
-    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTK_BASE, GPIO_PIN_7);
+    ROM_GPIOPinTypeGPIOOutput(RELAY_1_PORT, RELAY_1_PIN);
+    ROM_GPIOPinTypeGPIOOutput(RELAY_2_PORT, RELAY_2_PIN);
     
     // Turn them off initially
     relays_off();
