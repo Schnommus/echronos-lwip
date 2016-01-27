@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>eChronos HTTP Server</title>
+        <meta name="description" content="This page is served by lwIP running on the eChronos RTOS.">
+        <meta name="author" content="Seb Holzapfel">
+        <meta http-equiv="refresh" content="5">
+    </head>
+
+    <body>
+        <div align="center">
+            <h1>eChronos Geiger Counter Server</h1>
+            <img src="rad.jpeg"/>
+            <h1>CPM: <!--#cpm--> </h1>
+            <hr/>
+            <img src="data61.jpeg"/>
+            <hr/>
+            <h3>This webpage is served by lwIP v1.4.1 running on the Kochab variant of eChronos</h3>
+            <p>eChronos is a high-performance, formally verified RTOS built by CSIRO's Data61 in collaboration with Breakaway Consulting</p>
+            <p>It's open source! <a href="https://github.com/echronos/echronos">Get it on Github</a></p>
+        </div>
+    </body>
+</html>

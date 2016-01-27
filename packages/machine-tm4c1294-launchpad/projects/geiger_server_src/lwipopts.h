@@ -49,7 +49,7 @@
 //*****************************************************************************
 #define HOST_TMR_INTERVAL               10         // default is 0
 //#define DHCP_EXPIRE_TIMER_MSECS         (60 * 1000)
-//#define LWIP_HTTPD_SSI 1
+#define LWIP_HTTPD_SSI 1
 //#define LWIP_HTTPD_CGI 1
 #define LWIP_HTTPD_DYNAMIC_HEADERS 1
 //#define EMAC_PHY_CONFIG EMAC_PHY_TYPE_EXTERNAL_RMII

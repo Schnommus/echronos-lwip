@@ -28,7 +28,7 @@
 
 <system>
     <include_paths>
-        <include_path>packages/machine-tm4c1294-launchpad/projects/util</include_path>
+        <include_path>packages/machine-tm4c1294-launchpad/projects/geiger_server_src</include_path>
         <include_path>packages/machine-tm4c1294-launchpad/ti_libs</include_path>
         <include_path>packages/machine-tm4c1294-launchpad/ti_libs/inc</include_path>
         <include_path>packages/machine-tm4c1294-launchpad/ti_libs/stdlib_hook</include_path>
@@ -68,6 +68,10 @@
                     <number>40</number>
                     <handler>lwIPEthernetIntHandler</handler>
                 </external_irq>
+                <external_irq>
+                    <number>0</number>
+                    <handler>radiation_event_irq</handler>
+                </external_irq>
             </external_irqs>
         </module>
 
@@ -96,23 +100,39 @@
                     <stack_size>8192</stack_size>
                 </task>
 
+                <task>
+                    <name>update_cpm_task</name>
+                    <function>update_cpm_task</function>
+                    <priority>1</priority>
+                    <stack_size>2048</stack_size>
+                </task>
+
             </tasks>
 
             <signal_labels>
-
                 <signal_label>
                     <name>timer</name>
                 </signal_label>
-
                 <signal_label>
                     <name>start_tcpip_thread</name>
                 </signal_label>
-
                 <signal_label>
                     <name>trigger_ethernet_interrupt</name>
                 </signal_label>
-
+                <signal_label>
+                    <name>update_cpm</name>
+                </signal_label>
             </signal_labels>
+
+            <timers>
+                <timer>
+                    <name>update_cpm_timer</name>
+                    <enabled>true</enabled>
+                    <reload>1000</reload>
+                    <task>update_cpm_task</task>
+                    <sig_set>update_cpm</sig_set>
+                </timer>
+            </timers>
 
             <interrupt_events>
                 <interrupt_event>

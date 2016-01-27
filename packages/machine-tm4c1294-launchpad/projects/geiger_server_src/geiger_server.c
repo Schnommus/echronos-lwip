@@ -47,12 +47,28 @@
 #include "utils/uartstdio.h"
 #include "utils/ustdlib.h"
 #include "drivers/buttons.h"
+#include "httpd.h"
 
 #include "rtos-kochab.h"
 
 // Interrupt priorities
 #define SYSTICK_INT_PRIORITY    0x80
 #define ETHERNET_INT_PRIORITY   0xC0
+
+// Bunch of definitions to facilitate SSI
+
+#define SSI_INDEX_CPM  0
+
+static const char *g_pcConfigSSITags[] =
+{
+    "cpm"        // SSI_INDEX_CPM
+};
+
+#define NUM_CONFIG_SSI_TAGS     (sizeof(g_pcConfigSSITags) / sizeof (char *))
+
+static int32_t SSIHandler(int32_t iIndex, char *pcInsert, int32_t iInsertLen);
+
+// Debug functions
 
 #ifdef DEBUG
 void __error__( char *pcFilename, uint32_t ui32Line ) {
@@ -68,6 +84,9 @@ void usagefault() { for(;;); }
 
 uint32_t g_ui32SysClock;
 uint32_t g_ui32IPAddress;
+
+uint32_t g_cpmTotal;
+uint32_t g_cpmGood;
 
 void
 ConfigureUART(void)
@@ -89,19 +108,33 @@ ConfigureUART(void)
 
 bool tick_irq(void) {
     rtos_timer_tick();
-    // Buggy, omitted for now
-    //manual_brightness_adjust();
     return true;
 }
 
 
 void
-fatal(const RtosErrorId error_id)
-{
+fatal(const RtosErrorId error_id) {
     UARTprintf("eChronos: Internal OS error: %i\n", error_id);
-    for (;;)
+    for (;;) {}
+}
+
+
+static int32_t
+SSIHandler(int32_t iIndex, char *pcInsert, int32_t iInsertLen) {
+    // Which SSI tag have we been passed?
+    switch(iIndex)
     {
+        case SSI_INDEX_CPM:
+            usnprintf(pcInsert, iInsertLen, "%d", g_cpmGood);
+            break;
+
+        default:
+            usnprintf(pcInsert, iInsertLen, "??");
+            break;
     }
+
+    // Tell the server how many characters our insert string contains.
+    return ustrlen(pcInsert);
 }
 
 void
@@ -161,6 +194,22 @@ lwIPHostTimerHandler(void)
     }
 }
 
+void radiation_event_irq(void) {
+    UARTprintf("*");
+    ++g_cpmTotal;
+    GPIOIntClear(GPIO_PORTA_BASE, GPIO_PIN_7);
+}
+
+void update_cpm_task() {
+    while(1) {
+        UARTprintf("Waiting for timer...\n");
+        rtos_signal_wait( RTOS_SIGNAL_ID_UPDATE_CPM );
+        g_cpmGood = g_cpmTotal * 6;
+        g_cpmTotal = 0;
+        UARTprintf("Updated CPM to %d...\n", g_cpmGood);
+    }
+}
+
 int
 main(void)
 {
@@ -181,6 +230,20 @@ main(void)
     MAP_SysTickIntEnable();
 
     ConfigureUART();
+
+    // Configure interrupt source on PA7
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+
+    GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_7);
+    GPIOPadConfigSet(GPIO_PORTA_BASE,GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
+
+    // Interrupt setup
+    GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_7, GPIO_FALLING_EDGE);
+    GPIOIntEnable(GPIO_PORTA_BASE, GPIO_PIN_7);
+    IntEnable(INT_GPIOA);
+
+    g_cpmTotal = 0;
+    g_cpmGood = 0;
 
     UARTprintf( "Starting eChronos geiger server...\n" );
 
@@ -230,6 +293,9 @@ main(void)
     MAP_IntPrioritySet(INT_EMAC0, ETHERNET_INT_PRIORITY);
     MAP_IntPrioritySet(FAULT_SYSTICK, SYSTICK_INT_PRIORITY);
 
+    http_set_ssi_handler((tSSIHandler)SSIHandler, g_pcConfigSSITags, NUM_CONFIG_SSI_TAGS);
+
+    IntMasterEnable();
 
     rtos_start();
 
