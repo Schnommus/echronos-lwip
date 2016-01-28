@@ -197,7 +197,7 @@ lwIPHostTimerHandler(void)
 void radiation_event_irq(void) {
     UARTprintf("*");
     ++g_cpmTotal;
-    GPIOIntClear(GPIO_PORTA_BASE, GPIO_PIN_7);
+    GPIOIntClear(GPIO_PORTK_BASE, GPIO_PIN_7);
 }
 
 void update_cpm_task() {
@@ -231,16 +231,16 @@ main(void)
 
     ConfigureUART();
 
-    // Configure interrupt source on PA7
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    // Configure interrupt source on PK7
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOK);
 
-    GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_7);
-    GPIOPadConfigSet(GPIO_PORTA_BASE,GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
+    GPIOPinTypeGPIOInput(GPIO_PORTK_BASE, GPIO_PIN_7);
+    GPIOPadConfigSet(GPIO_PORTK_BASE,GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
 
     // Interrupt setup
-    GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_7, GPIO_FALLING_EDGE);
-    GPIOIntEnable(GPIO_PORTA_BASE, GPIO_PIN_7);
-    IntEnable(INT_GPIOA);
+    GPIOIntTypeSet(GPIO_PORTK_BASE, GPIO_PIN_7, GPIO_FALLING_EDGE);
+    GPIOIntEnable(GPIO_PORTK_BASE, GPIO_PIN_7);
+    IntEnable(INT_GPIOK);
 
     g_cpmTotal = 0;
     g_cpmGood = 0;
@@ -274,8 +274,8 @@ main(void)
     pui8MACArray[4] = ((ui32User1 >>  8) & 0xff);
     pui8MACArray[5] = ((ui32User1 >> 16) & 0xff);
 
-    // Initialze the lwIP library, using DHCP.
-    lwIPInit(g_ui32SysClock, pui8MACArray, 0, 0, 0, IPADDR_USE_DHCP);
+    // Initialze the lwIP library, using DHCP. gateway 192.168.0.30, mine 192.168.0.20
+    lwIPInit(g_ui32SysClock, pui8MACArray, 0xC0A80014, 0xFFFF0000, 0xC0A8001E, IPADDR_USE_STATIC);
 
     // Setup the device locator service.
     LocatorInit();

@@ -69,7 +69,7 @@
                     <handler>lwIPEthernetIntHandler</handler>
                 </external_irq>
                 <external_irq>
-                    <number>0</number>
+                    <number>52</number>
                     <handler>radiation_event_irq</handler>
                 </external_irq>
             </external_irqs>

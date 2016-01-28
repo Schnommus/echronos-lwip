@@ -159,7 +159,7 @@
 // ---------- DHCP options ----------
 //
 //*****************************************************************************
-#define LWIP_DHCP                       1           // default is 0
+#define LWIP_DHCP                       0           // default is 0
 //#define DHCP_DOES_ARP_CHECK             ((LWIP_DHCP) && (LWIP_ARP))
 
 //*****************************************************************************
@@ -181,11 +181,12 @@
 // ---------- AUTOIP options ----------
 //
 //*****************************************************************************
+/*
 #define LWIP_AUTOIP                     1           // default is 0
 #define LWIP_DHCP_AUTOIP_COOP           ((LWIP_DHCP) && (LWIP_AUTOIP))
                                                     // default is 0
 #define LWIP_DHCP_AUTOIP_COOP_TRIES     5           // default is 9
-
+*/
 //*****************************************************************************
 //
 // ---------- SNMP options ----------
