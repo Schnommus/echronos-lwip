@@ -274,8 +274,7 @@ main(void)
     pui8MACArray[4] = ((ui32User1 >>  8) & 0xff);
     pui8MACArray[5] = ((ui32User1 >> 16) & 0xff);
 
-    // Initialze the lwIP library, using DHCP. gateway 192.168.0.30, mine 192.168.0.20
-    lwIPInit(g_ui32SysClock, pui8MACArray, 0xC0A80014, 0xFFFF0000, 0xC0A8001E, IPADDR_USE_STATIC);
+    lwIPInit(g_ui32SysClock, pui8MACArray, 0, 0, 0, IPADDR_USE_DHCP);
 
     // Setup the device locator service.
     LocatorInit();

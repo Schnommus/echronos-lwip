@@ -249,7 +249,6 @@ main(void)
     pui8MACArray[4] = ((ui32User1 >>  8) & 0xff);
     pui8MACArray[5] = ((ui32User1 >> 16) & 0xff);
 
-    // Initialze the lwIP library, using DHCP.
     lwIPInit(g_ui32SysClock, pui8MACArray, 0, 0, 0, IPADDR_USE_DHCP);
 
     // Setup the device locator service.
